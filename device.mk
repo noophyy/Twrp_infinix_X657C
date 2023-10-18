@@ -48,8 +48,8 @@ TW_OVERRIDE_SYSTEM_PROPS := \
 
 # Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mtk.so \
-    fastbootd
+    fastbootd \
+    android.hardware.fastboot@1.0-impl-mock
 
 # Vendor ramdisk
 PRODUCT_COPY_FILES += \
