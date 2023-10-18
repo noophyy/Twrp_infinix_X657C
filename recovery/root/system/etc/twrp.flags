@@ -1,6 +1,6 @@
 # mount point    fstype    device                        device2              flags
 /metadata        ext4     /dev/block/bootdevice/by-name/md_udc                     flags=display="Metadata";backup=1
-/data			       f2fs	     /dev/block/by-name/userdata  /dev/block/mmcblk0p39			flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
+/data			       f2fs	     /dev/block/platform/bootdevice/by-name/userdata  /dev/block/mmcblk0p39			flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
 /system_root      ext4     /dev/block/platform/bootdevice/by-name/system       flags=backup=1;wipeingui
 /system_image     emmc     /dev/block/platform/bootdevice/by-name/system       flags=backup=1;flashimg=1
 /vendor          auto      /display="vendor";logical;backup=1;flashimg=1;wipeingui
