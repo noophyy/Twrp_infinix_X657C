@@ -22,7 +22,7 @@ on fs
     setprop crypto.ready 1
 
 on boot
-    start health-2-0
+    start health-hal-2-0
     start keymaster-4-0
     start gatekeeper-1-0
     start teei_daemon
@@ -40,7 +40,7 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
-service health-2-0 /vendor/bin/hw/android.hardware.health@2.0-service
+service health-hal-2-0 /vendor/bin/hw/android.hardware.health@2.0-service
     user root
     group root
     disabled
@@ -66,18 +66,18 @@ on property:hwservicemanager.ready=true
     
 on property:ro.crypto.state=unsupported
     stop teei_daemon
-    stop health-2-0
+    stop health-hal-2-0
     stop keymaster-4-0
     stop gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
-    stop health-2-0
+    stop health-hal-2-0
     stop keymaster-4-0
     stop gatekeeper-1-0
 
 on property:twrp.decrypt.done=true
     stop teei_daemon
-    stop health-2-0
+    stop health-hal-2-0
     stop keymaster-4-0
     stop gatekeeper-1-0
