@@ -33,5 +33,5 @@
 
 
 # External-Devices (SDCARD | OTG)
-/external_sd    auto     /dev/block/mmcblk1  /dev/block/mmcblk1p1           
+/external_sd    auto     /dev/block/mmcblk1  /dev/block/mmcblk1p1           flags=display="External_SD";storage;wipeingui;removable;fsflags="utf8"
 /usbotg        auto     /dev/block/sda  /dev/block/sda1                     flags=display="Usb_Otg";storage;wipeingui;removable;fsflags="utf8"
