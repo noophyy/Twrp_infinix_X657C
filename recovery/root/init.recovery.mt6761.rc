@@ -8,6 +8,15 @@ on init
     # Create a more standard /dev/block layout for our scripts
     symlink /dev/block/platform/bootdevice /dev/block/bootdevice
 
+on post-fs
+    # Support A/B feature for emmc boot region
+    symlink /dev/block/sda /dev/block/mmcblk0boot0
+    symlink /dev/block/sdb /dev/block/mmcblk0boot1
+    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
+    symlink /dev/block/mmcblk0boot0 /dev/block/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/by-name/preloader_b
+
 on fs
     install_keyring
     setprop crypto.ready 1
@@ -28,18 +37,16 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
-service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
     user root
     group root
     disabled
-    oneshot
     seclabel u:r:recovery:s0
 
-service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod
+service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
     user root
     group root drmrpc
     disabled
-    oneshot
     seclabel u:r:recovery:s0
 
 on property:hwservicemanager.ready=true
@@ -50,8 +57,8 @@ on property:hwservicemanager.ready=true
 
 on property:ro.crypto.state=unsupported
     stop teei_daemon
-    start keymaster-4-0
-    start gatekeeper-1-0
+    stop keymaster-4-0
+    stop gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
