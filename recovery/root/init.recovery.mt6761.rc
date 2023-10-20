@@ -23,6 +23,9 @@ on fs
 
 on boot
     start health-hal-2-0
+    start keymaster-4-0
+    start gatekeeper-1-0
+    start teei_daemon
 
 service keystore_auth /system/bin/keystore_auth
     oneshot
