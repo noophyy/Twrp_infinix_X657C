@@ -36,19 +36,19 @@ service keystore /system/bin/keystore /tmp/misc/keystore
 
 service teei_daemon /vendor/bin/teei_daemon
     user root
-    group root
+    group root drmrpc
     disabled
     seclabel u:r:recovery:s0
 
 service health-hal-2-0 /vendor/bin/hw/android.hardware.health@2.0-service
     user root
-    group root
+    group root drmrpc
     disabled
     seclabel u:r:recovery:s0
 
 service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     user root
-    group root
+    group root drmrpc
     disabled
     seclabel u:r:recovery:s0
 
