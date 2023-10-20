@@ -21,12 +21,6 @@ on fs
     install_keyring
     setprop crypto.ready 1
 
-on boot
-    start health-hal-2-0
-    start keymaster-4-0
-    start gatekeeper-1-0
-    start teei_daemon
-
 service keystore_auth /system/bin/keystore_auth
     oneshot
     user system
@@ -63,6 +57,12 @@ service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.bean
     group root drmrpc
     disabled
     seclabel u:r:recovery:s0
+
+on boot
+    start health-hal-2-0
+    start keymaster-4-0
+    start gatekeeper-1-0
+    start teei_daemon
 
 on property:hwservicemanager.ready=true
     start teei_daemon
