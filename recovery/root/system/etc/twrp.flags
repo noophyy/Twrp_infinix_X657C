@@ -6,7 +6,7 @@
 
 # Add partitions more.
 /metadata           ext4          /dev/block/by-name/metadata                              flags=display="Metadata";backup=1
-/data			         f2fs     	    /dev/block/by-name/userdata			                         flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
+/data			         f2fs     	    /dev/block/by-name/userdata			                         flags=fileencryption=aes-256-xts:aes-256-cts
 /system_root        auto         /dev/block/mapper/system                                  flags=display="System";backup=0;logical
 /vendor             auto     /dev/block/mapper/vendor                          flags=display="Vendor";logical
 /product            auto    /dev/block/mapper/product                         flags=display="Product";logical
