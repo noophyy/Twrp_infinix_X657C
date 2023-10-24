@@ -5,11 +5,8 @@
 # mount point       fstype    device                                                                flags
 
 # Add partitions more.
-/metadata           ext4          /dev/block/by-name/metadata                              flags=display="Metadata";backup=1
 /data			         f2fs     	    /dev/block/by-name/userdata			                         flags=fileencryption=aes-256-xts
 /system_root        auto         /dev/block/mapper/system                                  flags=display="System";backup=0;logical
-/vendor             auto     /dev/block/mapper/vendor                          flags=display="Vendor";logical
-/product            auto    /dev/block/mapper/product                         flags=display="Product";logical
 
 # Other partitions.
 /cache                    ext4     /dev/block/platform/bootdevice/by-name/cache             flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
