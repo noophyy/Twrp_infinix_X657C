@@ -41,13 +41,14 @@ service keystore /system/bin/keystore /tmp/misc/keystore
 
 service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     user system
-    group root drmrpc
+    group system
     disabled
     seclabel u:r:recovery:s0
 
 service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod
     user system
-    group root drmrpc
+    group system drmrpc
+    oneshot
     disabled
     seclabel u:r:recovery:s0
 
