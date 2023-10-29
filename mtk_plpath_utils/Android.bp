@@ -1,5 +1,5 @@
 cc_binary {
-    name: "mtk_plpath_utils",
+    name: "Android.bp",
     srcs:  ["mtk_plpath_utils.cpp"],
     recovery_available: true,
     static_libs: [
