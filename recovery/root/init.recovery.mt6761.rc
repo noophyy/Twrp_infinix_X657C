@@ -21,52 +21,62 @@ on fs
     install_keyring
     setprop crypto.ready 1
 
-on boot
-    start health-hal-2-0
-    start keymaster-4-0
-    start gatekeeper-1-0
-
 service keystore_auth /system/bin/keystore_auth
-    oneshot
     user system
     group root
     disabled
+    oneshot
     seclabel u:r:recovery:s0
 
 service keystore /system/bin/keystore /tmp/misc/keystore
     user root
-    group root drmrpc readproc
+    group root drmrpc readproc log
     disabled
     seclabel u:r:recovery:s0
 
-service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
-    user system
-    group system
+service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
+    class main
+    user root
+    group root system
     disabled
-    seclabel u:r:recovery:s0
-
-service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod
-    user system
-    group system drmrpc
     oneshot
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
+    user root
+    group root
     disabled
     seclabel u:r:recovery:s0
 
+service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
+    user root
+    group root drmrpc
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+on property:vendor.sys.listener.registered=true
+    start gatekeeper-1-0
+    
 on property:hwservicemanager.ready=true
     start keymaster-4-0
     start gatekeeper-1-0
-    
+   
 on property:ro.crypto.state=unsupported
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
-
+    
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
-
-on property:twrp.decrypt.done=true
+        
+on property:twrp.all.users.decrypted=true
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
+   
+on boot
+     start boot-hal-1-1
+     start health-hal-2-1
