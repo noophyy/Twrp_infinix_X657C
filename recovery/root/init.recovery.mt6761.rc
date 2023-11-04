@@ -4,6 +4,16 @@ on init
     mkdir /mnt/vendor/persist 0700 root root
     #mount ext4 /dev/block/platform/bootdevice/by-name/persist /mnt/vendor/persist
 
+on post-fs
+    # Support A/B feature for emmc boot region
+    symlink /dev/block/sda /dev/block/mmcblk0boot0
+    symlink /dev/block/sdb /dev/block/mmcblk0boot1
+    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
+    symlink /dev/block/mmcblk0boot0 /dev/block/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/by-name/preloader_b
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
 on fs
     install_keyring
     setprop crypto.ready 1
@@ -33,9 +43,17 @@ service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.bean
     disabled
     seclabel u:r:recovery:s0
 
+service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymaster_attestation@1.1-service
+    user root
+    group root drmrpc
+    disabled
+    seclabel u:r:recovery:s0
+
 on property:hwservicemanager.ready=true
+    start teei_daemon
     start keymaster-4-0
     start gatekeeper-1-0
+    start keymaster_attestation-1-1
 
 on property:ro.crypto.state=unsupported
     stop teei_daemon
@@ -57,3 +75,7 @@ on property:twrp.decrypt.done=true
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
+
+on boot
+    start boot-hal-1-0
+    start health-hal-1-0
