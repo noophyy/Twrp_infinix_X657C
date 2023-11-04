@@ -48,8 +48,8 @@ TW_OVERRIDE_SYSTEM_PROPS := \
 
 # fastboot/d hal
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mock
     fastbootd \
+    android.hardware.fastboot@1.0-impl-mock
 
 # OEM otacerts
 PRODUCT_EXTRA_RECOVERY_KEYS += \
