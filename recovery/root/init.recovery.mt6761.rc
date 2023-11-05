@@ -58,6 +58,7 @@ on property:hwservicemanager.ready=true
 on property:ro.crypto.state=unsupported
     stop teei_daemon
     stop keymaster-3-0
+    stop keymaster_attestation-1-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
@@ -65,6 +66,7 @@ on property:ro.crypto.state=unsupported
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
     stop keymaster-3-0
+    stop keymaster_attestation-1-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
@@ -72,6 +74,7 @@ on property:ro.crypto.state=unencrypted
 on property:twrp.decrypt.done=true
     stop teei_daemon
     stop keymaster-3-0
+    stop keymaster_attestation-1-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
