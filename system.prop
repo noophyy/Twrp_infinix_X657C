@@ -4,6 +4,6 @@ ro.mtk_tee_gp_support=1
 ro.adb.secure=0
 ro.mediatek.platform=MT6761
 ro.hardware=mt6761
-ro.hardware.kmsetkey=beanpod
+ro.hardware.kmsetkey=default
 ro.mtk_microtrust_tee_support=1
 ro.hardware.gatekeeper=beanpod
