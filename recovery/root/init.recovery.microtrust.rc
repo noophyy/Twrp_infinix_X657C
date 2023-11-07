@@ -1,4 +1,4 @@
-# For MTK DRM integration:
+ For MTK DRM integration:
 service teei_daemon /vendor/bin/teei_daemon \
     -r 020b0000000000000000000000000000 \
     -r 020f0000000000000000000000000000 \
@@ -21,9 +21,8 @@ service teei_daemon /vendor/bin/teei_daemon \
     -t 98fb95bcb4bf42d26473eae48690d7ea \
     -t 7b66512021214487ba710a51d7ea78fe \
     -t 09010000000000000000000000000000
-    class core
     user root
-    group root drmrpc
+    group root
     disabled
     seclabel u:r:recovery:s0
 
@@ -33,7 +32,8 @@ on boot
     chown system system /sys/bus/platform/devices/utos/load_ut_drv
     chown system system /sys/bus/platform/devices/utos/unload_ut_drv
     chown system system /sys/bus/platform/devices/utos/notify_ree_dci_handler
-#BSP:add XLLLHLWS-62 by lichen 20190924 start
+
+#for All mode
 on load_persist_props_action
     write /proc/bootprof "start teei cfg (on load_persist_props_action)"
     mkdir /data/vendor/thh
@@ -57,6 +57,7 @@ on load_persist_props_action
     mkdir /data/vendor/thh/tee_0E
     mkdir /data/vendor/thh/tee_0F
     mkdir /data/vendor/thh/ta
+    mkdir /data/vendor/thh/tee_log
     mkdir /data/vendor/key_provisioning
     chmod 0755 /data/vendor/thh
     chown system system /data/vendor/thh
@@ -97,6 +98,8 @@ on load_persist_props_action
     chown system system /data/vendor/thh/tee_0E
     chmod 0755 /data/vendor/thh/tee_0F
     chown system system /data/vendor/thh/tee_0F
+    chmod 0755 /data/vendor/thh/tee_log
+    chown system system /data/vendor/thh/tee_log
     chmod 0755 /data/vendor/thh/ta
     chown system system /data/vendor/thh/ta
     chmod 0755 /data/vendor/thh/system
@@ -105,11 +108,7 @@ on load_persist_props_action
     chmod 0771 /data/vendor/key_provisioning
     chown system system /data/vendor/key_provisioning
     write /proc/bootprof "start teei cfg end (on load_persist_props_action)"
-#BSP:add XLLLHLWS-62 by lichen 20190924 end
 
-#BSP:modify KBBGHLESGQ-67 by wang.qin 20190719 start
-#for All mode
-#on load_persist_props_action
 on property:vold.decrypt=trigger_restart_framework
     write /proc/bootprof "start teei cfg (on vold.decrypt=trigger_restart_framework)"
     mkdir /data/vendor/thh
@@ -134,6 +133,7 @@ on property:vold.decrypt=trigger_restart_framework
     mkdir /data/vendor/thh/tee_0F
     mkdir /data/vendor/thh/ta
     mkdir /data/vendor/key_provisioning
+    mkdir /data/vendor/thh/tee_log
     chmod 0755 /data/vendor/thh
     chown system system /data/vendor/thh
     chmod 0755 /data/vendor/thh/tee_00
@@ -173,15 +173,16 @@ on property:vold.decrypt=trigger_restart_framework
     chown system system /data/vendor/thh/tee_0E
     chmod 0755 /data/vendor/thh/tee_0F
     chown system system /data/vendor/thh/tee_0F
+    chmod 0755 /data/vendor/thh/tee_log
+    chown system system /data/vendor/thh/tee_log
     chmod 0755 /data/vendor/thh/ta
     chown system system /data/vendor/thh/ta
     chmod 0755 /data/vendor/thh/system
     chown system system /data/vendor/thh/system
-    restorecon_recursive /data/vendor/thh
     chmod 0771 /data/vendor/key_provisioning
     chown system system /data/vendor/key_provisioning
+    restorecon_recursive /data/vendor/thh
     write /proc/bootprof "start teei cfg end (on vold.decrypt=trigger_restart_framework)"
-#BSP:modify KBBGHLESGQ-67 by wang.qin 20190719 end
 
 on post-fs
     # Set /mnt/vendor/persist/rpmb
@@ -205,13 +206,17 @@ on post-fs
     restorecon_recursive /vendor/persist
 
 on fs
+    chown system system /mnt/vendor/persist
+    chmod 0771 /mnt/vendor/persist
+    restorecon /mnt/vendor/persist
+
     chmod 0660 /dev/teei_client
     chown system system /dev/teei_client
     chmod 0660 /dev/teei_config
     chown system system /dev/teei_config
-    # 666 for SVP, 660 for others
-    chmod 0666 /dev/tee0
-    chown system drmrpc /dev/tee0
+    # 666 for SVP
+    chmod 0666 /dev/isee_tee0
+    chown system drmrpc /dev/isee_tee0
     chmod 0660 /dev/tz_vfs
     chown system system /dev/tz_vfs
     chmod 0660 /dev/teei_fp
@@ -219,8 +224,12 @@ on fs
     chown system drmrpc /dev/ut_keymaster
     chmod 0660 /dev/ut_keymaster
     # rpmb device
+    chmod 0660 /dev/0:0:0:49476
+    chown system system /dev/0:0:0:49476
     chmod 0660 /dev/rpmb0
     chown system system /dev/rpmb0
+    chmod 0660 /dev/mmcblk0rpmb
+    chown root system /dev/mmcblk0rpmb
     # legacy rpmb device for cross-platform compatibility
     chmod 0660 /dev/emmcrpmb0
     chown system system /dev/emmcrpmb0
@@ -232,18 +241,6 @@ on fs
 
 on property:vendor.crypto.fake_encrypt=1 && property:vold.post_fs_data_done=1
     setprop vendor.soter.teei.crypto.state unencrypted
-    
+
 on post-fs-data
     setprop vendor.soter.teei.logini "start"
-
-# Normal mode, FBE
-on property:ro.crypto.type=file && property:ro.crypto.state=encrypted
-    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon ++ (FBE encrypted)"
-    mkdir /data/vendor/teei_daemon 0775 system system
-    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon -- (FBE encrypted)"
-
-# Normal mode, FDE
-on property:vold.decrypt=trigger_restart_framework
-    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon ++ (FDE encrypted)"
-    mkdir /data/vendor/teei_daemon 0775 system system
-    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon -- (FDE encrypted)"
