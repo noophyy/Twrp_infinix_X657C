@@ -235,3 +235,15 @@ on property:vendor.crypto.fake_encrypt=1 && property:vold.post_fs_data_done=1
     
 on post-fs-data
     setprop vendor.soter.teei.logini "start"
+
+# Normal mode, FBE
+on property:ro.crypto.type=file && property:ro.crypto.state=encrypted
+    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon ++ (FBE encrypted)"
+    mkdir /data/vendor/teei_daemon 0775 system system
+    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon -- (FBE encrypted)"
+
+# Normal mode, FDE
+on property:vold.decrypt=trigger_restart_framework
+    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon ++ (FDE encrypted)"
+    mkdir /data/vendor/teei_daemon 0775 system system
+    write /proc/bootprof "start teei_daemon: create /data/vendor/teei_daemon -- (FDE encrypted)"
