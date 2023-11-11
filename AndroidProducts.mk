@@ -7,3 +7,5 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_Max.mk
+
+COMMON_LUNCH_CHOICES := twrp_Max-eng
