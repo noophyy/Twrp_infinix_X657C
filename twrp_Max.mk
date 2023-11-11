@@ -22,16 +22,3 @@ PRODUCT_BRAND := Infinix
 PRODUCT_MODEL := Infinix Max
 PRODUCT_MANUFACTURER := infinix
 PRODUCT_RELEASE_NAME := Infinix Infinix Max
-
-PRODUCT_GMS_CLIENTID_BASE := android-transsion-infinix-rev1
-
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="full_x657c_h6117-user 10 QP1A.190711.020 286677 release-keys"
-
-BUILD_FINGERPRINT := Infinix/X657C-GL/Infinix-X657C:10/QP1A.190711.020/GH-GL-220426V311:user/release-keys
-
-# Fastbootd
-PRODUCT_PACKAGES += \
-    fastbootd \
-    android.hardware.fastboot@1.0-impl-mock 
-    android.hardware.fastboot@1.0-impl-mock.recovery
