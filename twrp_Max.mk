@@ -32,5 +32,6 @@ BUILD_FINGERPRINT := Infinix/X657C-GL/Infinix-X657C:10/QP1A.190711.020/GH-GL-220
 
 # Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mock \
+    fastbootd \
+    android.hardware.fastboot@1.0-impl-mock 
     android.hardware.fastboot@1.0-impl-mock.recovery
