@@ -7,9 +7,9 @@
 # Add partitions more.
 /data			          f2fs     	    /dev/block/platform/bootdevice/by-name/userdata			     flags=fileencryption=aes-256-xts
 /system_root        auto         /dev/block/mapper/system                                  flags=display="System";backup=0;logical
-/vendor             auto         /dev/block/mapper/vendor                                      flags=display="Vendor";logical
-/product            auto        /dev/block/mapper/product                                      flags=display="Product";logical
-/metadata           ext4        /dev/block/platform/bootdevice/by-name/metadata                    flags=display="Metadata";logical
+/vendor             auto         /dev/block/mapper/vendor                                   flags=display="Vendor";logical
+/product            auto        /dev/block/mapper/product                                   flags=display="Product";logical
+/metadata           ext4        /dev/block/platform/bootdevice/by-name/md_udc               flags=display="Metadata"
 
 # Other partitions.
 /cache                    ext4     /dev/block/platform/bootdevice/by-name/cache             flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
@@ -42,7 +42,6 @@
 /spmfw                    emmc      /dev/block/platform/bootdevice/by-name/spmfw
 /sec1                     emmc      /dev/block/platform/bootdevice/by-name/sec1
 /frp                      emmc      /dev/block/platform/bootdevice/by-name/frp
-/md_udc                 emmc      /dev/block/platform/bootdevice/by-name/md_udc
 
 # Standard MediaTek's Partitions
 /logo                     emmc     /dev/block/platform/bootdevice/by-name/logo              flags=display="Logo";backup=1;           
@@ -50,10 +49,10 @@
 /seccfg                   emmc     /dev/block/platform/bootdevice/by-name/seccfg            
 /spmfw                    emmc     /dev/block/platform/bootdevice/by-name/spmfw
 /tranfs                   ext4     /dev/block/platform/bootdevice/by-name/tranfs             flags=display="Tranfs";backup=1; 
-/tkv                      emmc      /dev/block/platform/bootdevice/by-name/tkv         flags=backup
+/tkv                      emmc      /dev/block/platform/bootdevice/by-name/tkv               flags=backup
 /tee1                     emmc      /dev/block/platform/bootdevice/by-name/tee1              flags=backup
 /tee2                     emmc      /dev/block/platform/bootdevice/by-name/tee2              flags=backup
-/proinfo                  emmc      /dev/block/platform/bootdevice/by-name/proinfo     flags=backup
+/proinfo                  emmc      /dev/block/platform/bootdevice/by-name/proinfo           flags=backup
 /otp                      emmc      /dev/block/platform/bootdevice/by-name/otp 
 /scp1                     emmc      /dev/block/plaform/bootdevice/by-name/scp1  
 /scp2                     emmc      /dev/block/platform/bootdevice/by-name/scp2 
