@@ -6,21 +6,3 @@
 #
 
 LOCAL_PATH := device/infinix/Max
-
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# VNDK
-PRODUCT_TARGET_VNDK_VERSION := 29
-
-# API
-PRODUCT_SHIPPING_API_LEVEL := 29
-
-# Fastbootd
-PRODUCT_PACKAGES += \
-    fastbootd \
-    android.hardware.fastboot@1.0-impl-mock 
-    android.hardware.fastboot@1.0-impl-mock.recovery
-
-# OEM otacerts
-PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/infinix
