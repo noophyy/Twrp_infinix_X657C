@@ -29,8 +29,7 @@ on boot
     chown system system /sys/bus/platform/devices/utos/load_ut_drv
     chown system system /sys/bus/platform/devices/utos/unload_ut_drv
     chown system system /sys/bus/platform/devices/utos/notify_ree_dci_handler
-
-#for All mode
+#BSP:add XLLLHLWS-62 by lichen 20190924 start
 on load_persist_props_action
     write /proc/bootprof "start teei cfg (on load_persist_props_action)"
     mkdir /data/vendor/thh
@@ -94,7 +93,7 @@ on load_persist_props_action
     chown system system /data/vendor/thh/tee_0E
     chmod 0755 /data/vendor/thh/tee_0F
     chown system system /data/vendor/thh/tee_0F
-    chmod 0755 /data/vendor/thh/ta
+chmod 0755 /data/vendor/thh/ta
     chown system system /data/vendor/thh/ta
     chmod 0755 /data/vendor/thh/system
     chown system system /data/vendor/thh/system
@@ -102,9 +101,13 @@ on load_persist_props_action
     chmod 0771 /data/vendor/key_provisioning
     chown system system /data/vendor/key_provisioning
     write /proc/bootprof "start teei cfg end (on load_persist_props_action)"
+#BSP:add XLLLHLWS-62 by lichen 20190924 end
 
-on property:crypto.ready=1
-    write /proc/bootprof "start teei cfg (on trigger_restart_framework)"
+#BSP:modify KBBGHLESGQ-67 by wang.qin 20190719 start
+#for All mode
+#on load_persist_props_action
+on property:vold.decrypt=trigger_restart_framework
+    write /proc/bootprof "start teei cfg (on vold.decrypt=trigger_restart_framework)"
     mkdir /data/vendor/thh
     mkdir /data/vendor/thh/system
     mkdir /data/vendor/thh/tee_00
@@ -173,7 +176,8 @@ on property:crypto.ready=1
     restorecon_recursive /data/vendor/thh
     chmod 0771 /data/vendor/key_provisioning
     chown system system /data/vendor/key_provisioning
-    write /proc/bootprof "start teei cfg end (on trigger_restart_framework)"
+    write /proc/bootprof "start teei cfg end (on vold.decrypt=trigger_restart_framework)"
+#BSP:modify KBBGHLESGQ-67 by wang.qin 20190719 end
 
 on post-fs
     # Set /mnt/vendor/persist/rpmb
@@ -185,8 +189,7 @@ on post-fs
     chown system system /mnt/vendor/persist/rpmb
     chmod 0771 /mnt/vendor/persist/rpmb
     restorecon_recursive /mnt/vendor/persist/rpmb
-
-    # Set other rpmb
+# Set other rpmb
     mkdir /persist/rpmb
     mkdir /vendor/persist/rpmb
     chmod 0771 /persist/rpmb
