@@ -15,7 +15,6 @@ on post-fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
 on fs
-    on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     install_keyring
 
 service keystore_auth /system/bin/keystore_auth
