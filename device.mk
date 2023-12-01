@@ -16,15 +16,11 @@ PRODUCT_TARGET_VNDK_VERSION := 29
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
-# Fastboot
-PRODUCT_PACKAGES += \
-    fastbootd \
-    android.hardware.fastboot@1.0-impl-mock
-
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bootimage.build.date.utc=0 \
     ro.build.date.utc=0
 
-# fastbootd
+# Fastbootd
 PRODUCT_PACKAGES += \
-    fastbootd
+    fastbootd \
+    android.hardware.fastboot@1.0-impl-mock
