@@ -3,9 +3,10 @@ LOCAL_PATH := device/infinix/Max
 PRODUCT_TARGET_VNDK_VERSION := 29
 PRODUCT_SHIPPING_API_LEVEL := 29
 
+# Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl \
-    android.hardware.boot@1.1-impl-recovery
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery
 
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
@@ -21,11 +22,10 @@ PRODUCT_PACKAGES_DEBUG += \
 # Dynamic Partition
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-
 # Fastbootd
 PRODUCT_PACKAGES += \
     fastbootd \
-    android.hardware.fastboot@1.0-impl-mtk.so
+    android.hardware.fastboot@1.0-impl-mock
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
