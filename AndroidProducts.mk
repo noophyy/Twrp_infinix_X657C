@@ -8,4 +8,7 @@
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_Max.mk
 
-COMMON_LUNCH_CHOICES := twrp_Max-eng
+COMMON_LUNCH_CHOICES := \
+               twrp_Max-userdebug \
+               twrp_Max-user \
+               twrp_Max-eng
