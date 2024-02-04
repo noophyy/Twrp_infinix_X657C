@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_Max.mk
+    $(LOCAL_DIR)/twrp_X657C.mk
 
 COMMON_LUNCH_CHOICES := \
-               twrp_Max-userdebug \
-               twrp_Max-user \
-               twrp_Max-eng
+               twrp_X657C-userdebug \
+               twrp_X657C-user \
+               twrp_X657C-eng

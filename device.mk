@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-LOCAL_PATH := device/infinix/Max
+LOCAL_PATH := device/infinix/X657C
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
@@ -43,7 +43,7 @@ PRODUCT_TARGET_VNDK_VERSION := 29
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
-# fastbootd
+# Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
-    fastbootd
+    fastbootd \
+    android.hardware.fastboot@1.0-impl-mtk.so

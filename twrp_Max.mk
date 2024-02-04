@@ -10,15 +10,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Inherit from spinel device
-$(call inherit-product, device/infinix/Max/device.mk)
+$(call inherit-product, device/infinix/X657C/device.mk)
 
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := Max
-PRODUCT_NAME := twrp_Max
+PRODUCT_DEVICE := X657C
+PRODUCT_NAME := twrp_X657C
 PRODUCT_BRAND := Infinix
-PRODUCT_MODEL := Infinix Max
+PRODUCT_MODEL := Infinix X657C
 PRODUCT_MANUFACTURER := infinix
-PRODUCT_RELEASE_NAME := Infinix Infinix Max
+PRODUCT_RELEASE_NAME := Infinix X657C
